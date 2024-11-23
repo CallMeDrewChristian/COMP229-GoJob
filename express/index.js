@@ -18,10 +18,12 @@ app.post("/", (req,res) => {
     res.send("Bye!");
 })
 app.get("/", (req, res) => {
-    res.send("Hello World!");
+    res.send("Hello World");
 })
 
 app.post("/postjob", (req, res) => {
+app.listen(4000, ()=> {
+    console.log(`App is listening to 4000`);
 
+    
 })
-
