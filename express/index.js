@@ -10,7 +10,6 @@ app.get("/", (req, res) => {
 
 deswqeqwqewnioqewionqewionqewnioeqwnioeqwnioqewion
 
-'
 app.get("/getjobs", (req,res) => {
     res.send("Jobs");
 })
