@@ -7,12 +7,15 @@ app.get("/", (req, res) => {
 
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 app.get("/getjobs", (req,res) => {
     res.send("Jobs");
 })
 app.get("/getjewqeqwqewqewobs", (req,res) => {
     res.send("Jobs");
 })
+=======
+>>>>>>> parent of c5faa67b (Added getJobs)
 =======
 >>>>>>> parent of c5faa67b (Added getJobs)
 app.listen(4000, ()=> {
