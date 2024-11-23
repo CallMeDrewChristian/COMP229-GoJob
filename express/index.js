@@ -10,9 +10,6 @@ app.get("/", (req, res) => {
 
 deswqeqwqewnioqewionqewionqewnioeqwnioeqwnioqewion
 
-app.get("/getjobs", (req,res) => {
-    res.send("Jobs");
-})
 app.listen(4000, ()=> {
     console.log(`App is listening to 4000`);
 })
