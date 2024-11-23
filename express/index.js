@@ -14,6 +14,9 @@ mongoose.connect(URL)
     
 })
 
+app.post("/", (req,res) => {
+    res.send("Bye!");
+})
 app.get("/", (req, res) => {
     res.send("Hello World!");
 })
