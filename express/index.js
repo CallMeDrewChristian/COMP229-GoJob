@@ -1,7 +1,7 @@
 const express = require('express');
 const mongoose = require('mongoose')
 const app = express();
-const URL = "";
+const URL = `mongodb+srv://drakekirkos:1234@webdev.snrip.mongodb.net/`;
 
 app.use(express.json());
 
