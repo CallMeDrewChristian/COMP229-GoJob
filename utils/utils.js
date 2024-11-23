@@ -3,6 +3,10 @@ const User = require('../models/user');
 require('dotenv').config();
 
 
+
+//creating tokens(cookies) and verifying it
+//copied from lesson*
+
 const createToken = (id) => {
     return jwt.sign({id}, process.env.JWT_SECRET, {expiresIn: 3 * 24 * 60 * 60} );
  }
@@ -31,5 +35,6 @@ const createToken = (id) => {
        res.redirect('/login')
     }
  }
- 
+
+
  module.exports = { createToken, requireAuth}

@@ -5,6 +5,8 @@ require('dotenv').config()
 const User = require('../models/user');
 const { createToken } = require('../utils/utils');
 
+//need to update if models/user.js is updated with employer login/signup
+//copied from lesson*
 
 router.get('/signup', (req,res)=>res.render('signup'))
 
