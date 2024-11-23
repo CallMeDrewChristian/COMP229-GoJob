@@ -5,11 +5,6 @@ app.get("/", (req, res) => {
     res.send("Hello World");
 })
 
-'
-
-
-deswqeqwqewnioqewionqewionqewnioeqwnioeqwnioqewion
-
 app.listen(4000, ()=> {
     console.log(`App is listening to 4000`);
 })
