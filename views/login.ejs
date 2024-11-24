@@ -1,34 +1,28 @@
-<form action="/signup">
+<form action="/login">
     <input type="text" name="email" required/>
     <div class="email error"></div>
     <input type="text" name="password" required/>
     <div class="password error"></div>
-
-    <label>
-        <input type="radio" name="role" value="Job-Seeker" required/>
-    </label>
-    <label>
-        <input type="radio" name="role" value="Employer" required/>
-    </label>
-
-    <button>signup</button>
+    <button>Login</button>
 </form>
 
-const form = document.querySelector('form')
-form.addEventListener('submit', async(e)=>{
+
+<script>
+    const form = document.querySelector('form')
+    form.addEventListener('submit', async(e)=>{
     try{
         e.preventDefault();
         const email = form.email.value
         const password = form.email.value
-        const role = form.role.value
-        const res = await fetch('/signup', {
+        const res = await fetch('/login', {
             method: 'post',
-            body: JSON.stringify({email, password, role}),
+            body: JSON.stringify({email, password}),
             headers: {'Content-type': 'application/json'}
 
         });
         const data = await res.json();
         console.log(data);
+        location.assign('/')
     }
     catch(ex) {
         console.log("error")
@@ -36,3 +30,4 @@ form.addEventListener('submit', async(e)=>{
 
     }
 })
+</script>

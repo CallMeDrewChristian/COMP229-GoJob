@@ -1,25 +1,23 @@
-import logo from './logo.svg';
-import './App.css';
+const express = require('express')
+const app = express()
+const cookieParser = require('cookie-parser')
+const mongoose= require('mongoose')
+require('dotenv').config()
+const authRoute = require('./routes/authRoute')
+const {requireAuth} = require("./utils/utils");
 
-function App() {
-  return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
-  );
-}
 
-export default App;
+app.use(express.static('public'))
+app.use(express.json())
+app.use(cookieParser())
+
+
+//viewing engine for ejs files in ../views
+app.set('view engine', 'ejs')
+
+
+app.get('/', (req,res)=> res.render('home'))
+app.get('/employees', requireAuth, (req,res)=> {
+    res.render('employees')
+})
+app.use(authRoute)
