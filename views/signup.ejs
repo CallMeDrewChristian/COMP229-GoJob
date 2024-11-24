@@ -1,5 +1,5 @@
 <form action="/signup">
-    <input type="text" name="email" required/>
+    <input type="email" name="email" required/> 
     <div class="email error"></div>
     <input type="text" name="password" required/>
     <div class="password error"></div>
@@ -23,7 +23,7 @@
     try{
         e.preventDefault();
         const email = form.email.value
-        const password = form.email.value
+        const password = form.password.value
         const role = form.role.value
         const res = await fetch('/signup', {
             method: 'post',
@@ -33,10 +33,15 @@
         });
         const data = await res.json();
         console.log(data);
+        
+        if (data.user){
+            window.location.href = '/home'
+        } else {
+            console.log("signup failed")
+        }
     }
-    catch(ex) {
+    catch(err) {
         console.log("error")
-        console.dir(ex)
 
     }
 })
