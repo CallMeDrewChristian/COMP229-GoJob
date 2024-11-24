@@ -3,10 +3,10 @@ const app = express()
 const cookieParser = require('cookie-parser')
 const mongoose= require('mongoose')
 require('dotenv').config()
-const authRoute = require('./routes/authRoute')
+const authRoute = require('./routes/authRoutes')
 const {requireAuth} = require("./utils/utils");
 
-
+/*
 app.use(express.static('public'))
 app.use(express.json())
 app.use(cookieParser())
@@ -20,4 +20,4 @@ app.get('/', (req,res)=> res.render('home'))
 app.get('/employees', requireAuth, (req,res)=> {
     res.render('employees')
 })
-app.use(authRoute)
+app.use(authRoute) */

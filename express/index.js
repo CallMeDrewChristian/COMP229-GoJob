@@ -3,6 +3,8 @@ const mongoose = require('mongoose')
 const app = express();
 const URL = `mongodb+srv://drakekirkos:1234@webdev.snrip.mongodb.net/`;
 
+
+
 app.use(express.json());
 
 mongoose.connect(URL)
