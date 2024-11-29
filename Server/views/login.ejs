@@ -1,0 +1,35 @@
+<form action="/login">
+    Email: 
+    <input type="email" name="email" required/>
+    <div class="email error"></div>
+    Password:
+    <input type="password" name="password" required/>
+    <div class="password error"></div>
+    <button>Login</button>
+</form>
+
+
+<script>
+    const form = document.querySelector('form')
+    form.addEventListener('submit', async(e)=>{
+    try{
+        e.preventDefault();
+        const email = form.email.value
+        const password = form.password.value
+        const res = await fetch('/login', {
+            method: 'post',
+            body: JSON.stringify({email, password}),
+            headers: {'Content-type': 'application/json'}
+
+        });
+        const data = await res.json();
+        console.log(data);
+        location.assign('/employees')
+    }
+    catch(ex) {
+        console.log("error")
+        console.dir(ex)
+
+    }
+})
+</script>

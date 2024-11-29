@@ -1,0 +1,54 @@
+<form action="/signup">
+    Email
+    <input type="email" name="email" required/> 
+    <div class="email error"></div>
+    Password
+    <input type="password" name="password" required/>
+    <div class="password error"></div>
+
+    <label>
+        Job Seeker
+        <input type="radio" name="role" value="Job-Seeker" required/>
+    </label>
+    <label>
+        Employer
+        <input type="radio" name="role" value="Employer" required/>
+    </label>
+
+    <button>Sign</button>
+</form>
+
+
+
+<Script> 
+     const form = document.querySelector('form')
+
+    form.addEventListener('submit', async(e)=>{
+        e.preventDefault();
+        const email = form.email.value
+        const password = form.password.value
+        const role = form.role.value
+        console.log(email, password, role)
+        try{
+        const res = await fetch('/signup', {
+            method: 'post',
+            body: JSON.stringify({'email': email, 'password': password, 'role': role}),
+            headers: {'Content-type': 'application/json'}
+
+        });
+        const data = await res.json();
+        
+        if (data.user){
+            window.location.href = '/employees'
+        } else {
+            console.log("signup failed")
+        }
+    }
+    catch(err) {
+        console.log("error")
+
+    }
+})
+
+</Script>
+
