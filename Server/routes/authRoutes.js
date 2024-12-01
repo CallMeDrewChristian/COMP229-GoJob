@@ -4,9 +4,10 @@ const jwt = require('jsonwebtoken')
 require('dotenv').config()
 const User = require('../models/user');
 const { createToken } = require('../utils/utils');
+const Job = require('../models/job');
 
 
-
+//REMEMBER TO ADD FIRST NAME LAST NAME COMPANY NAME!!!
 router.get('/signup', (req,res)=>res.render('signup'))
 
 router.post('/signup', async (req,res) => {
@@ -78,5 +79,66 @@ router.delete("/deleteaccount", async(req,res) => {
         res.send(`Error: ${err}`)
     }
 })
+
+router.get("/jobpost", async(req,res) => {
+    try {
+        const Jobs = await Job.find();
+        res.status(201).json(Jobs)
+    }
+
+    catch(err){
+        console.error(`Error: ${err}`)
+        res.status(404).json({'message': `Error: ${err}`});
+    }
+})
+
+
+router.post("/jobpost", async(req,res) => {
+    try{
+        console.log("Working")
+        const {title, description, deadline, company} = req.body;
+        //checkAuthentication
+        const jobPost = await Job.create({
+            'title': title,
+            'description': description,
+            'deadline': deadline,
+            'company': company
+        })
+
+        await jobPost.save();
+        console.log("Saved!")
+        res.status(201).json({message: "Success!"})
+
+    }
+    catch(err){
+        console.error(`Error: ${err}`)
+        res.send(`Error: ${err}`)
+    }
+})
+router.patch("/jobpost", async(req,res) => {
+    try{
+        const {title, company, newtitle,newdescription,newdeadline} = req.body;
+        const updatedJob = await Job.findOneAndUpdate({title: title, company: company}, {'title':newtitle,'description':newdescription,'deadline':newdeadline}, {new: true, runValidators: true})
+        res.status(201).json({message: "Successfully updated!", updatedJob})
+    }
+    catch(err){
+        console.error(`Error: ${err}`)
+        res.status(404).json({'message': `Error: ${err}`});
+    }
+})
+router.delete("/jobpost", async(req,res) => {
+    try{
+        const {title, company} = req.body;
+        const updatedJob = await Job.findOneAndDelete({title: title, company: company})
+        res.status(201).json({message: "Successfully deleted!", updatedJob})
+    }
+    catch(err){
+        console.error(`Error: ${err}`)
+        res.status(404).json({'message': `Error: ${err}`});
+    }
+})
+
+
+
 
 module.exports = router
