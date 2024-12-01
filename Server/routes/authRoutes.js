@@ -3,7 +3,7 @@ const router = Router()
 const jwt = require('jsonwebtoken')
 require('dotenv').config()
 const User = require('../models/user');
-const { createToken, requireAuth } = require('../utils/utils');
+const { createToken, requireAuth, logoutAuth } = require('../utils/utils');
 const Job = require('../models/job');
 
 
@@ -139,7 +139,7 @@ router.delete("/jobpost", async(req,res) => {
 })
 
 router.get("/auth", requireAuth)
-
+router.get("/logout", logoutAuth)
 
 
 module.exports = router
