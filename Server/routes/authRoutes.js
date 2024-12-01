@@ -3,7 +3,7 @@ const router = Router()
 const jwt = require('jsonwebtoken')
 require('dotenv').config()
 const User = require('../models/user');
-const { createToken } = require('../utils/utils');
+const { createToken, requireAuth } = require('../utils/utils');
 const Job = require('../models/job');
 
 
@@ -138,6 +138,7 @@ router.delete("/jobpost", async(req,res) => {
     }
 })
 
+router.get("/auth", requireAuth)
 
 
 

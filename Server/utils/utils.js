@@ -11,29 +11,26 @@ const jwt = require('jsonwebtoken');
       return jwt.sign({id}, process.env.JWT_SECRET, {expiresIn: 3 * 24 * 60 * 60} );
    }
    
-   const requireAuth = (req, res, next) => {
+   const requireAuth = async (req, res, next) => {
       const token = req.cookies.jwt;
-      console.log(token)
       if(token)
       {
          jwt.verify(token, process.env.JWT_SECRET, (err, decodedToken)=> {
             if(err)
             {
-               console.log(err.message)
-               res.redirect('/login')
+               res.status(401).json({message: "Unauthorized!"})
             }
             else
             {
-               console.log(decodedToken)
-               next()
+               res.status(201).json({message: "Success!"})
             }
    
          })
    
       }
       else{
-         console.log("token undefined")
-         res.redirect('/login')
+         res.status(401).json({message: "Unauthorized!"})
+         return false
       }
    }
 
