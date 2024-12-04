@@ -60,8 +60,10 @@ router.post('/login', async (req,res) => {
         console.log(email, password)
         const user = await User.login(email, password);
         const token = createToken(user._id)
-        res.cookie('jwt', token, {httpOnly: true, maxAge: 3*24*60*60*1000})
-        res.status(201).json({user: user._id})
+        console.log(token)
+        let maxAge = 3*24*60*60*1000
+        res.cookie('jwt', token, {httpOnly: true, maxAge: maxAge, sameSite: 'lax', secure: false})
+        res.status(201).json({user: user._id, "cookie": [token, maxAge.toString()]})
         
 
     }

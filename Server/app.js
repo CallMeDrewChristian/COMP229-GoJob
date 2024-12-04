@@ -9,9 +9,13 @@ const cookieParser = require('cookie-parser')
 const cors = require('cors')
 const PORT = process.env.PORT;
 const URL = process.env.MONGODB_URL;
+const frontEndURL = "http://192.168.0.18"
 app.use(express.json())
 app.use(cookieParser())
-app.use(cors())
+app.use(cors({
+    origin: [`${frontEndURL}:5173`, `http://localhost:5173`], 
+    credentials: true, }
+))
 mongoose.connect(URL)
     .then(() => {
         console.log("Successfully logged into the database!");
