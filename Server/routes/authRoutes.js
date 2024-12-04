@@ -10,25 +10,47 @@ const Job = require('../models/job');
 //REMEMBER TO ADD FIRST NAME LAST NAME COMPANY NAME!!!
 router.get('/signup', (req,res)=>res.render('signup'))
 
-router.post('/signup', async (req,res) => {
+router.post('/signup', async (req, res) => {
+    const {
+        email,
+        password,
+        role,
+        firstName,
+        lastName,
+        address,
+        dateOfBirth,
+        phoneNumber,
+        educationLevel,
+        jobPosition,
+        company,
+        companyWebsite
+    } = req.body;
 
-        try{
-        console.log(req.body)
-        res.status(201).json({success:req.body})
-       /* const user = await User.create({email, password, role})
-        console.log("User Created");
-        const token = createToken(user._id)
-        console.log("Token Created");
-        res.cookie('jwt', token, {httpOnly: true, maxAge: 3*24*60*60*1000})
-        res.status(201).json({user: user._id})
-        */
+    try {
+        const newUser = new User({
+            email,
+            password,
+            role,
+            firstName,
+            lastName,
+            address,
+            dateOfBirth,
+            phoneNumber,
+            educationLevel,
+            jobPosition,
+            company,
+            companyWebsite
+        });
+
+        const user = await newUser.save();
+        console.log('User created:', user);
+        res.status(201).json({ user: user._id });
+    } catch (error) {
+        console.error('Error creating user:', error);
+        res.status(400).json({ error: error.message });
     }
-    catch(err)
-    {
-        console.log(`Error: ${err}`)
-        res.send(`Error: ${err}`)
-    }
-})
+});
+
 
 router.get("/login", (req,res)=>{res.render("login")})
 

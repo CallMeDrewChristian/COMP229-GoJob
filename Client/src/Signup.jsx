@@ -12,8 +12,6 @@ function Signup() {
     address: '',
     dateOfBirth: '',
     phoneNumber: '',
-    resume: null,
-    coverLetter: null,
     educationLevel: '',
     jobPosition: '',
     company: '',
@@ -138,22 +136,6 @@ function Signup() {
             name="phoneNumber"
             required
             value={formData.phoneNumber}
-            onChange={handleChange}
-          />
-        </label>
-        <br /><br />
-        <label>Resume (PDF, DOC):&nbsp;
-          <input
-            type="file"
-            name="resume"
-            onChange={handleChange}
-          />
-        </label>
-        <br /><br />
-        <label>Cover Letter (PDF, DOC):&nbsp;
-          <input
-            type="file"
-            name="coverLetter"
             onChange={handleChange}
           />
         </label>
