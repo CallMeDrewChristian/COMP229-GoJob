@@ -10,7 +10,7 @@ function Home() {
     <NavBar/>
 
     <div className='HomePage'>
-
+        hello world
 
 
     </div>
