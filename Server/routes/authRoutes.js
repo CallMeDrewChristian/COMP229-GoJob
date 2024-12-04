@@ -13,14 +13,15 @@ router.get('/signup', (req,res)=>res.render('signup'))
 router.post('/signup', async (req,res) => {
 
         try{
-            const {email, password, role} = req.body
-        const user = await User.create({email, password, role})
+        console.log(req.body)
+        res.status(201).json({success:req.body})
+       /* const user = await User.create({email, password, role})
         console.log("User Created");
         const token = createToken(user._id)
         console.log("Token Created");
         res.cookie('jwt', token, {httpOnly: true, maxAge: 3*24*60*60*1000})
         res.status(201).json({user: user._id})
-
+        */
     }
     catch(err)
     {
