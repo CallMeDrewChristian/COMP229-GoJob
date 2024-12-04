@@ -1,101 +1,138 @@
 import React, { useState } from 'react';
-
+import './App.css'
 function Signup() {
-  const [formData, setFormData] = useState({
-    email: '',
-    password: '',
-    role: '',
-  });
+  const [selectedOption, setSelectedOption] = useState(0)
 
-  const [errors, setErrors] = useState({
-    email: '',
-    password: '',
-  });
+  function selectRoleEvent(event) {
+    setSelectedOption(event.target.value)
+  }
 
-  const handleChange = (e) => {
-    const { name, value } = e.target;
-    setFormData((prevData) => ({
-      ...prevData,
-      [name]: value,
-    }));
-  };
+  let signupform = "";
 
-  const handleSubmit = async (e) => {
-    e.preventDefault();
+  if (selectedOption == "jobapplicant") {
+    signupform = (
+      <form>
+        <h2>Job Applicant Registration</h2>
+        <br/>  
+        <label>
+          Email:&nbsp;
+          <input type='email' name='email' required/>
+        </label>
+        <br/>          <br/>  
+        <label>
+          Password:&nbsp;
+          <input type='password' name='password' required/>
+        </label>
+        <br/> 
+        <hr/>
 
-    const { email, password, role } = formData;
-
-    try {
-      const res = await fetch('http://192.168.0.15:8000/signup', {
-        method: 'POST',
-        body: JSON.stringify({ email, password, role }),
-        headers: { 'Content-Type': 'application/json' },
-      });
-
-      const data = await res.json();
-
-      if (data.user) {
-        window.location.href = '/employees';
-      } else {
-        setErrors((prevErrors) => ({
-          ...prevErrors,
-          email: 'Signup failed. Please check your details.',
-        }));
-        console.log('Signup failed');
-      }
-    } catch (err) {
-      console.log('Error:', err);
-    }
-  };
+        <label>
+          First Name:&nbsp;
+          <input type='text' name='firstName' required/>
+        </label>
+        <br/>   <br/>
+        <label>
+          Last Name:&nbsp;
+          <input type='text' name='lastName' required/>
+        </label>
+        <br/>   <br/>
+        <label>
+          Address:&nbsp; 
+          <input type='text' name='address' required/>
+        </label>
+        <br/>   <br/>
+        <label>
+          Date of Birth:&nbsp; 
+          <input type='date' name='dateofbirth' required/>
+        </label>
+        <br/>   <br/>
+        <label>
+          Phone Number:&nbsp; 
+          <input type='tel' name='phonenumber' required/>
+        </label>
+        <br/>   <br/>
+        <label>
+          Resume (File - pdf, doc recommended):&nbsp; 
+          <input type='file' name='resume'/>
+        </label>
+        <br/>   <br/>
+        <label>
+          Cover Letter (File - pdf, doc recommended): &nbsp;
+          <input type='file' name='coverletter'/>
+        </label>
+        <br/>   <br/>
+        <label>
+         Education Level:&nbsp;
+            <select name="educationlevel" required>
+              <option value="">Select Education Level</option>
+              <option value="highschool">High School</option>
+              <option value="College">College</option>
+              <option value="University">University</option>
+              <option value="Other">Other</option>
+            </select>
+        </label>
+        <br/>   <br/>
+        <button type="submit">Sign Up for Job Applicant</button>
+      </form>
+    )
+  }
+  else if (selectedOption == "employer") {
+    signupform = (
+      <form>
+        <h2>Job Applicant Registration</h2>
+        <label>
+          First Name: 
+          <input type='text' name='firstName' required/>
+        </label>
+        <label>
+          Last Name: 
+          <input type='text' name='lastName' required/>
+        </label>
+        <label>
+          Phone Number: 
+          <input type='tel' name='phonenumber' required/>
+        </label>
+        <label>
+          Job Position: 
+          <input type='text' name='jobposition'/>
+        </label>
+        <label>
+          Company Name: 
+          <input type='text' name='company'/>
+        </label>
+        <label>
+          Company Website: 
+          <input type='url' name='companywebsite'/>
+        </label>
+        <label>
+          Address: 
+          <input type='text' name='address'/>
+        </label>
+        <label>
+          Company Logo: 
+          <input type='file' name='companyLogo'/>
+        </label>
+        <button type="submit">Sign Up for Employer</button>
+      </form>
+    )
+  }
 
   return (
-    <form onSubmit={handleSubmit}>
-      <label>Email</label>
-      <input
-        type="email"
-        name="email"
-        value={formData.email}
-        onChange={handleChange}
-        required
-      />
-      <div className="email error">{errors.email}</div>
+    <>
+    <div>
+    <label>
+        <h2>Role Selection</h2>
+            <select name="roleselection" required value={selectedOption} onChange={selectRoleEvent} >
+              <option value="">Select Role</option>
+              <option value="employer">Employer</option>
+              <option value="jobapplicant">Job Applicant</option>
+            </select>
+        </label>
+    </div>
+    {signupform}
+    </>
 
-      <label>Password</label>
-      <input
-        type="password"
-        name="password"
-        value={formData.password}
-        onChange={handleChange}
-        required
-      />
-      <div className="password error">{errors.password}</div>
-
-      <label>
-        Job Seeker
-        <input
-          type="radio"
-          name="role"
-          value="Job-Seeker"
-          checked={formData.role === 'Job-Seeker'}
-          onChange={handleChange}
-          required
-        />
-      </label>
-      <label>
-        Employer
-        <input
-          type="radio"
-          name="role"
-          value="Employer"
-          checked={formData.role === 'Employer'}
-          onChange={handleChange}
-          required
-        />
-      </label>
-
-      <button type="submit">Sign</button>
-    </form>
-  );
-};
+  ); 
+}
 
 export default Signup;
