@@ -1,5 +1,7 @@
 import React, { useState } from 'react';
 import './App.css'
+import NavBar from './NavBar'
+
 function Signup() {
   const [selectedOption, setSelectedOption] = useState(0)
 
@@ -76,49 +78,55 @@ function Signup() {
       </form>
     )
   }
-  else if (selectedOption == "employer") {
+  else if (selectedOption == "employer")   {
     signupform = (
       <form>
-        <h2>Job Applicant Registration</h2>
+        <h2>Employer Registration</h2>
+        <br/>
         <label>
-          First Name: 
+          First Name: &nbsp;
           <input type='text' name='firstName' required/>
         </label>
+        <br/><br/>
         <label>
-          Last Name: 
+          Last Name: &nbsp;
           <input type='text' name='lastName' required/>
         </label>
+        <br/><br/>
         <label>
-          Phone Number: 
+          Phone Number: &nbsp;
           <input type='tel' name='phonenumber' required/>
         </label>
+        <br/><br/>
         <label>
-          Job Position: 
+          Job Position: &nbsp;
           <input type='text' name='jobposition'/>
         </label>
+        <br/><br/>
         <label>
-          Company Name: 
+          Company Name:&nbsp; 
           <input type='text' name='company'/>
         </label>
+        <br/><br/>
         <label>
-          Company Website: 
+          Company Website: &nbsp;
           <input type='url' name='companywebsite'/>
         </label>
-        <label>
+        <br/><br/>
+        <label>&nbsp;
           Address: 
           <input type='text' name='address'/>
         </label>
-        <label>
-          Company Logo: 
-          <input type='file' name='companyLogo'/>
-        </label>
+        <br/><br/>
+        <br/><br/>
         <button type="submit">Sign Up for Employer</button>
       </form>
-    )
+    );
   }
 
   return (
     <>
+    <NavBar/>
     <div>
     <label>
         <h2>Role Selection</h2>

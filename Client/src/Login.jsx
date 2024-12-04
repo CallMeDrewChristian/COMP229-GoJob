@@ -1,5 +1,5 @@
 import React, {useState} from 'react';
-
+const URL = "http://192.168.0.18:8000"
 function Login() {
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
@@ -8,7 +8,7 @@ function Login() {
         e.preventDefault();
         console.log("Prevent Default")
         try {
-          const response = await fetch('http://192.168.0.15:8000/login', {
+          const response = await fetch(`${URL}/login`, {
             method: 'POST',
             headers: { 'Content-Type': 'application/json' },
             body: JSON.stringify({ email, password }),
