@@ -11,6 +11,7 @@ function JobPost() {
         <>
            <NavBar/>
     
+
     <div className='ResumeInfo'>
     
        <Post/>
