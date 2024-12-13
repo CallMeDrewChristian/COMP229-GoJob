@@ -8,6 +8,9 @@ const URL = "http://localhost:8000"
 
 function NavBar() {
 
+    const goHome = () => {
+      window.location.href = '/';
+    }
 
     const handleLogout = async () => {
         try {
@@ -22,11 +25,11 @@ function NavBar() {
           } catch (error) {
             console.error('Error during fetch:', error);
           }
-        navigate("/");
+          window.location.href = '/';
     }
 
 
-
+    
 
     let webpage
     const [isAuth, setIsAuth] = useState(false);
@@ -112,8 +115,8 @@ function NavBar() {
 
         
         <div className='logo'>
-        <Link to="/">
-        <img src={logo} alt='Gojob'/>
+        <Link>
+        <img onClick={goHome} src={logo} alt='Gojob'/>
         </Link>
         </div>
         
