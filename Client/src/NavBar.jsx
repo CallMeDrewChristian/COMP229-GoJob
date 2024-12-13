@@ -3,9 +3,17 @@ import { Link } from 'react-router-dom';
 
 
 
-
+    
 
 function NavBar() {
+
+
+    const handleLogout = () => {
+        localStorage.removeItem('jwt');
+
+       // navigate('/login');
+        console.log("Logged out") 
+    }
     return(
         <>
         <div className="Nav">
@@ -28,6 +36,7 @@ function NavBar() {
         <a href='Resume'>Your Resume</a>   
         <a href='JobPost'>Job Listings</a>    
         <a href='UserProfile'>My Profile</a>
+        <a href="/" onClick={handleLogout}>Logout</a>
         </div>
         
     </div>

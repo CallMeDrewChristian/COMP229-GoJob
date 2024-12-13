@@ -1,20 +1,12 @@
 import React, { useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 
-async function getAuth() {
-    try {
-        const response = await fetch('http://192.168.0.15:8000/auth', {
-            method: 'GET',
-        });
-        if (response.ok) {
-            console.log('Login successful');
-            return true;
-        } else {
-            console.log('Nope');
-            return false;
-        }
-    } catch (ex) {
-        console.error('Error during login:', ex);
+function checkUserAuthentication() {
+    const token = localStorage.getItem('jwt');
+
+    if (token) {
+        return true;
+    } else {
         return false;
     }
 }
@@ -23,21 +15,17 @@ function Message() {
     const navigate = useNavigate();
 
     useEffect(() => {
-        const checkAuth = async () => {
-            const isAuth = await getAuth();
-            if (!isAuth) {
-                navigate('/login'); // Redirect to the login page if not authenticated
-            }
-        };
-
-        checkAuth();
-    }, [navigate]); // Dependency ensures `navigate` is stable
-
+        const isAuthenticated = checkUserAuthentication();
+        
+        if (!isAuthenticated) {
+            navigate('/login');
+        }
+    }, [navigate]);
 
     return (
-        <>
-           <h1>Hello World!</h1>
-        </>
+        <div>
+            <h1>Welcome to the Dashboard!</h1>
+        </div>
     );
 }
 

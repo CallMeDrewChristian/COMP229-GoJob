@@ -1,38 +1,81 @@
-const mongoose = require('mongoose')
-const bcrypt = require('bcrypt')
-const {isEmail} = require('validator')
-
-
+const mongoose = require('mongoose');
+const bcrypt = require('bcrypt');
+const { isEmail } = require('validator');
 
 const userSchema = new mongoose.Schema({
     email: {
         type: String,
-        required: [true, 'Enter an email'],
+        required: [false, 'Enter an email'],
         unique: true,
         lowercase: true,
-        validator: [isEmail, 'Enter a valid email']
+        validate: [isEmail, 'Enter a valid email']
     },
     password: {
         type: String,
-        required: [true, 'Please enter password'],
-        minlength: [6, 'Min length of password is 6']
+        required: [false, 'Please enter a password'],
+        minlength: [6, 'Minimum length of password is 6 characters']
     },
     role: {
         type: String,
-        required: [true, "select a role"],
-        enum: ["Job-Seeker" , "Employer"]
-    }
-})
+        required: [true, 'Select a role'],
+        enum: ['jobapplicant', 'employer']
+    },
+    firstName: {
+        type: String,
+        required: [true, 'Enter your first name']
+    },
+    lastName: {
+        type: String,
+        required: [true, 'Enter your last name']
+    },
+    address: {
+        type: String,
+        required: [true, 'Enter your address']
+    },
+    dateOfBirth: {
+        type: Date,
+        required: function () {
+            return this.role === 'jobapplicant';
+        }
+    },
+    phoneNumber: {
+        type: String,
+        required: [true, 'Enter your phone number']
+    },
+    educationLevel: {
+        type: String,
+        required: function () {
+            return this.role === 'jobapplicant';
+        }
+    },
+    jobPosition: {
+        type: String,
+        required: function () {
+            return this.role === 'employer';
+        }
+    },
+    company: {
+        type: String,
+        required: function () {
+            return this.role === 'employer';
+        }
+    },
+    companyWebsite: {
+        type: String,
+        validate: {
+            validator: function (v) {
+                return v === '' || /^https?:\/\/\S+\.\S+/.test(v);
+            },
+            message: 'Enter a valid URL'
+        }
+    },
+}, { timestamps: true });
 
-userSchema.pre('save', async function(next){
+userSchema.pre('save', async function (next) {
     const salt = await bcrypt.genSalt();
     this.password = await bcrypt.hash(this.password, salt);
     next();
-
-})
-
-
-
+});
 userSchema.statics.login =  async function(email, password)
 {
     const user = await this.findOne({email});
@@ -86,5 +129,5 @@ userSchema.methods.deleteAccount = async function(email, password) {
     return 'Successfully deleted account';
 };
 
-const User = mongoose.model('user', userSchema);
-module.exports = User; 
+const User = mongoose.model('User', userSchema);
+module.exports = User;
