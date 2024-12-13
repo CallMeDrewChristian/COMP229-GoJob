@@ -94,12 +94,7 @@ userSchema.statics.login =  async function(email, password)
     }
 }
 
-userSchema.methods.getName  = async function(email) {
-    const user  = await User.findOne({email});
-    if (user) {
-        return user.firstName;
-    }
-}
+
 
 userSchema.methods.changePassword = async function(email, oldpassword, newpassword) {
     const user = await User.findOne({ email });

@@ -42,6 +42,9 @@ const jwt = require('jsonwebtoken');
                   res.status(401).json({ message: "Unauthorized!" });
               } else {
                   res.clearCookie('jwt', { httpOnly: true, secure: true, sameSite: 'strict' });
+                  res.clearCookie('name', { httpOnly: true, secure: true, sameSite: 'strict' });
+                  res.clearCookie('type', { httpOnly: true, secure: true, sameSite: 'strict' });
+                  res.clearCookie('id', { httpOnly: true, secure: true, sameSite: 'strict' });
                   res.status(200).json({ message: "Logged out successfully!" });
               }
           });

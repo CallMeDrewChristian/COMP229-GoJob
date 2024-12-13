@@ -6,6 +6,7 @@ const User = require('../models/user');
 const { createToken, requireAuth, logoutAuth } = require('../utils/utils');
 const Job = require('../models/job');
 
+const mongoose = require('mongoose');
 
 //REMEMBER TO ADD FIRST NAME LAST NAME COMPANY NAME!!!
 router.get('/signup', (req,res)=>res.render('signup'))
@@ -67,6 +68,7 @@ router.post('/login', async (req,res) => {
         res.cookie('jwt', token, {httpOnly: true, maxAge: maxAge, sameSite: 'lax', secure: false})
         res.cookie('name', userData.firstName, {httpOnly: false, maxAge: maxAge, sameSite: 'lax', secure: false})
         res.cookie('type', userData.role, {httpOnly: false, maxAge: maxAge, sameSite: 'lax', secure: false})
+        res.cookie('id', userData._id.toString(), {httpOnly: false, maxAge: maxAge, sameSite: 'lax', secure: false})
         res.status(201).json({user: user._id, "cookie": [token, maxAge.toString()]})
         
 
@@ -112,7 +114,8 @@ router.delete("/deleteaccount", async(req,res) => {
 router.get("/jobpost", async(req,res) => {
     try {
         const Jobs = await Job.find();
-        res.status(201).json(Jobs)
+        console.log("Sending 201")
+        res.status(201).json({"jobs": Jobs})
     }
 
     catch(err){
@@ -160,6 +163,25 @@ router.delete("/jobpost", async(req,res) => {
         const {title, company} = req.body;
         const updatedJob = await Job.findOneAndDelete({title: title, company: company})
         res.status(201).json({message: "Successfully deleted!", updatedJob})
+    }
+    catch(err){
+        console.error(`Error: ${err}`)
+        res.status(404).json({'message': `Error: ${err}`});
+    }
+})
+
+
+router.get("/getuser", async(req,res) => {
+    try {
+        console.log("Hello!")
+        const _id = req.cookies.id;
+        console.log(_id);
+        const userId = new mongoose.Types.ObjectId(_id);
+        console.log(userId)
+        const user = await User.findById(userId)
+
+        res.status(201).json({message: "Success!", "user": user})
+
     }
     catch(err){
         console.error(`Error: ${err}`)

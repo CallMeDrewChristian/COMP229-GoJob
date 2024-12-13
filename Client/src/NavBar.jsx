@@ -95,8 +95,7 @@ function NavBar() {
     
     
             <div className="NavBar">
-            <a href='Resume'>Your Resume</a>   
-            <a href='JobPost'>Job Listings</a>    
+            <a href='Resume'>Your Resume</a>      
             <a href='UserProfile'>My Profile</a>
             <a href="/" onClick={handleLogout}>Logout</a>
             </div>
@@ -127,7 +126,6 @@ function NavBar() {
 
 
         <div className="NavBar">
-        <a href='JobPost'>Job Listings</a>    
         <a href="Login">Login</a>
         <a href="Signup">Signup</a>
         </div>

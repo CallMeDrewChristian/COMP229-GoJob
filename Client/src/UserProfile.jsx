@@ -3,41 +3,76 @@ import { Link } from 'react-router-dom';
 import NavBar from './NavBar'
 import './UserProfile.css';
 import React, { useEffect, useState } from 'react';
-
+const URL = "http://localhost:8000"
 
 function UserProfile() {
-    const [userInfo, setUserData] = useState(null);
-
-    useEffect(() => {
-        const savedUserInfo = localStorage.getItem('userInfo')
-        if (savedUserInfo) {
-            setUserData(JSON.parse(savedUserInfo))
-        }
+    const [userInfo, setUserInfo] = useState(null);
+    let userData = ""
+    useEffect(async () => {
+        const response = await fetch(`${URL}/getuser`, {
+            method: 'GET',
+            headers: {
+              'Content-Type': 'application/json',
+            },
+            credentials: 'include',
+          });
+          
+          const data = await response.json(); 
+            console.log(data.user); 
+        setUserInfo(data.user)
     }, []);
 
+    
     if (!userInfo) {
         return (
             <>
                 <NavBar />
-                    <h1>error loading user info</h1>
+                    <h1>Error Loading User Info</h1>
             </>
         );
+    }
+    else {
+        if (userInfo.role == "employer")  {
+            userData = (
+            <>
+                <p>Job Position : {userInfo.jobPosition}</p>
+                <p>Company Name: {userInfo.company}</p>
+                <p>Company Website : {userInfo.companyWebsite}</p>
+                <p>Address : {userInfo.address}</p>
+                </>
+            )
+        }
+        else {
+            userData = (
+       <>
+      
+                <p>Address : {userInfo.address}</p>
+                <p>Date of Birth : {userInfo.dateOfBirth}</p>
+                <p>Education Level : {userInfo.educationLevel}</p>
+                <p>Phone Number : {userInfo.phoneNumber}</p>
+                </>
+                )
+        }
+    
     }
     return (
     <>
     <NavBar/>
     <div className='UserInfo'>
-        <h1>User Info:</h1>
-        <p>User First Name : {userInfo.firstName}</p>
-        <p>User Last Name : {userInfo.lastName}</p>
-        <p>User Address : {userInfo.address}</p>
-        <p>Date of Birth : {userInfo.dateOfBirth}</p>
-        <p>Education Level : {userInfo.educationLevel}</p>
-        <p>phone number : {userInfo.phoneNumber}</p>
+        <h1>User Info</h1>
+        <p>Email : {userInfo.email}</p>
+        <p>First Name : {userInfo.firstName}</p>
+        <p>Last Name : {userInfo.lastName}</p>
+        <p>Role : {userInfo.role}</p>
+        {userData}
         </div>
         <br/>
         <br/>
-        <button>Delete user account</button>    
+        <button>Edit User Account</button>
+        <br/>
+        <button>Change Password</button>
+        <br/>
+        <button>Delete User Account</button>    
     </>
     )
 }

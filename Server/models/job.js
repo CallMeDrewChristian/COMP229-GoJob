@@ -24,6 +24,18 @@ const jobSchema = new mongoose.Schema({
         required: [true, 'Enter the company name'],
         unique: true,
         lowercase: false,
+    },
+    location: {
+        type: String,
+        required: [true, 'Enter the location'],
+        unique: true,
+        lowercase: false,
+    },
+    salary: {
+        type: String,
+        required: [true, 'Enter the salary'],
+        unique: true,
+        lowercase: false,
     }
 })
 

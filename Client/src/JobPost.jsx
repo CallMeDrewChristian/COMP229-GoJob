@@ -1,35 +1,89 @@
-import React from "react";
+import React, {useState, useEffect} from "react";
 import NavBar from './NavBar';
-import Post from './Post'; // Make sure you import the Post component
+import Post from './Post'; 
+
+const URL = "http://localhost:8000"
 
 function JobPost() {
+  const [isAuth, setIsAuth] = useState(false);
+    
+    const checkAuth = async () => {
+      try {
+        const response = await fetch(`${URL}/auth`, {
+          method: 'GET',
+          headers: {
+            'Content-Type': 'application/json',
+          },
+          credentials: 'include',
+        });
+        
+        if (response.status === 201) {
+          setIsAuth(true);
+        } else {
+          setIsAuth(false);
+        }
+      } catch (error) {
+        console.error('Error during fetch:', error);
+        setIsAuth(false);
+      }
+    };
+  
+    useEffect(() => {
+      checkAuth();
+    }, []);
+
+
+
+  const [jobs, setJobs] = useState([]);
+
+  useEffect(() => {
+    async function getJobs() {
+      console.log("Starting?");
+      try {
+        const response = await fetch(`${URL}/jobpost`, {
+          method: 'GET',
+          headers: {
+            'Content-Type': 'application/json',
+          },
+        });
+
+        const data = await response.json();
+        console.log("Response data:", data);
+
+        if (data.jobs) {
+          setJobs(data.jobs); 
+        } else {
+          console.error("Jobs data is missing in the response");
+        }
+      } catch (err) {
+        console.error("Error fetching jobs:", err);
+      }
+    }
+
+    getJobs();
+  }, []);
+
   return (
     <>
       <NavBar />
-      <br/>      <br/>      <br/>      <br/>      <br/>
+      <br /> <br /> <br /> <br /> <br />
       <h1 className="Title">Job Board</h1>
       <div className='ResumeInfo'>
-        <Post 
-          title="Software Engineer" 
-          company="TechCorp" 
-          location="Remote" 
-          salary="$100k - $120k"
-          description="Develop and maintain software solutions."
-        />
-        <Post 
-          title="Product Manager" 
-          company="Innova Inc." 
-          location="New York, NY" 
-          salary="$90k - $110k"
-          description="Manage product lifecycle and teams."
-        />
-        <Post 
-          title="Graphic Designer" 
-          company="Creative Co." 
-          location="Los Angeles, CA" 
-          salary="$60k - $80k"
-          description="Design digital and print materials."
-        />
+        {jobs.length > 0 ? (
+          jobs.map((job, index) => (
+            <Post
+              key={index} 
+              title={job.title}
+              description={job.description}
+              company={job.company}
+              salary={job.salary}
+              location={job.location}
+              isAuth = {isAuth}
+            />
+          ))
+        ) : (
+          <p>No job posts available.</p> 
+        )}
       </div>
     </>
   );
