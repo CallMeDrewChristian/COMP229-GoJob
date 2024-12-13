@@ -115,16 +115,17 @@ userSchema.methods.changePassword = async function(email, oldpassword, newpasswo
     return `Password sucessfully updated`
 }
 
-userSchema.methods.deleteAccount = async function(email, password) {
+userSchema.methods.deleteAccount = async function(email) {
+    console.log("Deleting Account")
     const user = await User.findOne({ email });
     if (!user) {
         throw Error('User not found');
     }
 
-    const isAuth = await bcrypt.compare(password, user.password);
+   /* const isAuth = await bcrypt.compare(password, user.password);
     if (!isAuth) {
         throw Error('Incorrect password');
-    }
+    }*/
 
     await User.findByIdAndDelete(user._id);
 

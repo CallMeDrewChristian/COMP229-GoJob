@@ -4,6 +4,34 @@ import NavBar from './NavBar'
 import './UserProfile.css';
 import React, { useEffect, useState } from 'react';
 const URL = "http://localhost:8000"
+let deleteUserInfo = ""
+async function deleteUserAccount() {
+    const response = await fetch(`${URL}/deleteaccount`, {
+        method: 'DELETE',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({ email: deleteUserInfo.email }),
+        credentials: 'include',
+      });
+      
+      const data = await response.json(); 
+        console.log(data.user); 
+        console.log("GONE")
+        try {
+            const response = await fetch(`${URL}/logout`, {
+              method: 'GET',
+              headers: {
+                'Content-Type': 'application/json',
+              },
+              credentials: 'include',
+            });
+            
+          } catch (error) {
+            console.error('Error during fetch:', error);
+          }
+          window.location.href = '/';
+};
 
 function UserProfile() {
     const [userInfo, setUserInfo] = useState(null);
@@ -19,6 +47,7 @@ function UserProfile() {
           
           const data = await response.json(); 
             console.log(data.user); 
+            deleteUserInfo = data.user 
         setUserInfo(data.user)
     }, []);
 
@@ -55,6 +84,10 @@ function UserProfile() {
         }
     
     }
+
+
+  
+
     return (
     <>
     <NavBar/>
@@ -72,7 +105,7 @@ function UserProfile() {
         <br/>
         <button>Change Password</button>
         <br/>
-        <button>Delete User Account</button>    
+        <button onClick={deleteUserAccount}>Delete User Account</button>    
     </>
     )
 }

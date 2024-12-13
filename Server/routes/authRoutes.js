@@ -96,20 +96,28 @@ router.patch("/changepassword", async(req, res) => {
     }
 })
 
-router.delete("/deleteaccount", async(req,res) => {
-    try{
-        const {email,password} = req.body
-        const user = await User.findOne({email});
-        if (!user) {return res.status(404).json({error: "User Not Found"})}
-        console.log(email, password)
-        await user.deleteAccount(email,password);
-        res.send("Successfully Deleted!")
+router.delete("/deleteaccount", async (req, res) => {
+    try {
+        const { email } = req.body;
+        const user = await User.findOne({ email });
+        if (!user) {
+            return res.status(404).json({ error: "User Not Found" });
+        }
+        console.log(email);
+    
+       /* const isAuth = await bcrypt.compare(password, user.password);
+        if (!isAuth) {
+            throw Error('Incorrect password');
+        }*/
+    
+        await User.findByIdAndDelete(user._id);
+        let result = "Successfully Deleted"
+        res.status(200).json({ message: result });
+    } catch (err) {
+        console.error(`Error: ${err}`);
+        res.status(500).send(`Error: ${err}`);
     }
-    catch(err) {
-        console.error(`Error: ${err}`)
-        res.send(`Error: ${err}`)
-    }
-})
+});
 
 router.get("/jobpost", async(req,res) => {
     try {

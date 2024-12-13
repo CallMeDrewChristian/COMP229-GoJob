@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import './App.css';
 import NavBar from './NavBar';
-const URL = "http://192.168.0.18:8000"
+const URL = "http://localhost:8000"
 function Signup() {
   const [selectedOption, setSelectedOption] = useState("");
   const [formData, setFormData] = useState({
@@ -60,7 +60,7 @@ function Signup() {
       console.log(data.success);
       if (data.user) {
         localStorage.setItem('userInfo', JSON.stringify(dataToSubmit  ))
-        window.location.href = '/user-profile';
+        window.location.href = '/';
       } else {  
         console.log('Signup failed');
       }
