@@ -1,5 +1,5 @@
 import React, {useState} from 'react';
-const URL = "http://192.168.0.18:8000"
+const URL = "http://localhost:8000"
 function Login() {
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
