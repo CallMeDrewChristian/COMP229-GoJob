@@ -34,6 +34,10 @@ function Signup() {
       ...prevData,
       [name]: updatedValue
     }));
+
+
+
+
   }
 
   async function handleSubmit(event) {
@@ -55,8 +59,9 @@ function Signup() {
       const data = await response.json();
       console.log(data.success);
       if (data.user) {
-        window.location.href = '/employees';
-      } else {
+        localStorage.setItem('userInfo', JSON.stringify(dataToSubmit  ))
+        window.location.href = '/user-profile';
+      } else {  
         console.log('Signup failed');
       }
     } catch (error) {
