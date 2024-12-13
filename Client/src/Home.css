@@ -1,6 +1,5 @@
 .Nav {
-        background-color: rgb(193, 88, 88); 
-    padding: 10px;
+    background-color: rgb(193, 88, 88); 
     width: 100%; 
     position: fixed;
     top: 0;
@@ -8,20 +7,21 @@
     right: 0;
     display: flex;
     flex-direction: column;
-    align-items: flex-start;
     justify-content: flex-start;
+    margin-top: -100px;
+
     }
     
 .NavBar a {
         color: black;
         font-size: 20px;
         font-weight: bold;
-        padding: 15px 100px;
-        margin-top: 500px;
+        padding: 5px 100px;
 }
 
 .NavBar a:hover {
-        background-color: rgba(26, 25, 25, 0.2); 
+        background-color: rgba(0, 0, 0, 0.2); 
+        padding: 5px 100px;
 }
 
 
@@ -48,7 +48,6 @@ body {
 }
 
 .logo {
-        height: 10px;
         margin-right: 1100px;
         z-index: 1100;
         margin-top: -25px;
@@ -57,7 +56,9 @@ body {
 
 .logo img {
         height: 100px;
-        margin-top: 20px;
-        margin-right: 300px;
+        margin-top: 115px;
+        margin-right: 100px;
+        margin-left: -200px;
 }
+
 

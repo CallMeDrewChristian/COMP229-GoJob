@@ -6,18 +6,26 @@ function Login() {
     const [error, setError] = useState({ email: '', password: '' });
     const handleSubmit = async (e) => {
         e.preventDefault();
-        console.log("Prevent Default")
         try {
           const response = await fetch(`${URL}/login`, {
             method: 'POST',
             headers: { 'Content-Type': 'application/json' },
             body: JSON.stringify({ email, password }),
+            credentials: 'include',
           });
           const data = await response.json();
-    
+          
           if (response.ok) {
             console.log('Login successful:', data);
-            window.location.assign('/'); 
+            console.log(data.cookie)
+            if (data.cookie) {
+              const [token, maxAge] = data.cookie;
+               const cookieName = 'jwt';  
+              localStorage.setItem(cookieName, token)
+
+      console.log('Token cookie set:', token);
+            }
+            //window.location.assign('/employees'); 
           } else {
             console.error('Login failed:', data);
             setError({
