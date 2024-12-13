@@ -1,5 +1,6 @@
 import React, {useState} from 'react';
 const URL = "http://localhost:8000"
+import NavBar from './NavBar';
 function Login() {
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
@@ -21,11 +22,11 @@ function Login() {
             if (data.cookie) {
               const [token, maxAge] = data.cookie;
                const cookieName = 'jwt';  
-              localStorage.setItem(cookieName, token)
+              //localStorage.setItem(cookieName, token)
 
       console.log('Token cookie set:', token);
             }
-            //window.location.assign('/employees'); 
+            window.location.assign('/'); 
           } else {
             console.error('Login failed:', data);
             setError({
@@ -40,6 +41,7 @@ function Login() {
 
     return  (
         <>
+        <NavBar/>
          <form onSubmit={handleSubmit}>
       <label>
         Email:

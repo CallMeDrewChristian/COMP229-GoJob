@@ -66,7 +66,7 @@ function Signup() {
 
   let signupForm = "";
 
-  if (selectedOption === "jobapplicant") {
+  if (selectedOption === "Job Applicant") {
     signupForm = (
       <form onSubmit={handleSubmit}>
         <h2>Job Applicant Registration</h2>
@@ -158,7 +158,7 @@ function Signup() {
         <button type="submit">Sign Up for Job Applicant</button>
       </form>
     );
-  } else if (selectedOption === "employer") {
+  } else if (selectedOption === "Employer") {
     signupForm = (
       <form onSubmit={handleSubmit}>
         <h2>Employer Registration</h2>
@@ -262,8 +262,8 @@ function Signup() {
           <h2>Role Selection</h2>
           <select name="roleselection" required value={selectedOption} onChange={selectRoleEvent}>
             <option value="">Select Role</option>
-            <option value="employer">Employer</option>
-            <option value="jobapplicant">Job Applicant</option>
+            <option value="Employer">Employer</option>
+            <option value="Job Applicant">Job Applicant</option>
           </select>
         </label>
       </div>

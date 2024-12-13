@@ -18,7 +18,7 @@ const userSchema = new mongoose.Schema({
     role: {
         type: String,
         required: [true, 'Select a role'],
-        enum: ['jobapplicant', 'employer']
+        enum: ['Job Applicant', 'Employer']
     },
     firstName: {
         type: String,
@@ -91,6 +91,13 @@ userSchema.statics.login =  async function(email, password)
     }
     else{
         throw Error('incorrect email')
+    }
+}
+
+userSchema.methods.getName  = async function(email) {
+    const user  = await User.findOne({email});
+    if (user) {
+        return user.firstName;
     }
 }
 
