@@ -59,7 +59,6 @@ function Signup() {
       const data = await response.json();
       console.log(data.success);
       if (data.user) {
-        localStorage.setItem('userInfo', JSON.stringify(dataToSubmit  ))
         window.location.href = '/';
       } else {  
         console.log('Signup failed');
