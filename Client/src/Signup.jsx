@@ -57,7 +57,6 @@ function Signup() {
         body: JSON.stringify(dataToSubmit),
       });
       const data = await response.json();
-      console.log(data.success);
       if (data.user) {
         window.location.href = '/';
       } else {  
