@@ -43,9 +43,7 @@ const jobSchema = new mongoose.Schema({
 
 
 
-/*userSchema.method.postJob = async function(title, description, deadline, requirements) {
 
-}*/
 
 const Job = mongoose.model('job', jobSchema);
 module.exports = Job; 

@@ -57,13 +57,10 @@ router.get("/login", (req,res)=>{res.render("login")})
 router.post('/login', async (req,res) => {
     try{
         const {email, password} = req.body
-        console.log(email, password)
         const user = await User.login(email, password);
         const token = createToken(user._id)
-        console.log(token)
         let maxAge = 3*24*60*60*1000
         const userData = await User.findOne({email});
-        console.log(userData)
         res.cookie('jwt', token, {httpOnly: true, maxAge: maxAge, sameSite: 'lax', secure: false})
         res.cookie('name', userData.firstName, {httpOnly: false, maxAge: maxAge, sameSite: 'lax', secure: false})
         res.cookie('type', userData.role, {httpOnly: false, maxAge: maxAge, sameSite: 'lax', secure: false})
@@ -74,7 +71,7 @@ router.post('/login', async (req,res) => {
     }
     catch(err)
     {
-        console.log(`Error: ${err}`)
+        console.error(`Error: ${err}`)
         res.send(`Error: ${err}`)
 
     }
@@ -86,7 +83,6 @@ router.patch("/changepassword", async(req, res) => {
         const user = await User.findOne({email});
         if (!user) {return res.status(404).json({error: "User Not Found"})}
         await user.changePassword(email, oldpassword, newpassword);
-        console.log("Password has changed")
         res.send("Successfully changed password!")
     }
     catch(err) {
@@ -102,12 +98,6 @@ router.delete("/deleteaccount", async (req, res) => {
         if (!user) {
             return res.status(404).json({ error: "User Not Found" });
         }
-        console.log(email);
-    
-       /* const isAuth = await bcrypt.compare(password, user.password);
-        if (!isAuth) {
-            throw Error('Incorrect password');
-        }*/
     
         await User.findByIdAndDelete(user._id);
         let result = "Successfully Deleted"
@@ -121,7 +111,6 @@ router.delete("/deleteaccount", async (req, res) => {
 router.get("/jobpost", async(req,res) => {
     try {
         const Jobs = await Job.find();
-        console.log("Sending 201")
         res.status(201).json({"jobs": Jobs})
     }
 
@@ -134,7 +123,6 @@ router.get("/jobpost", async(req,res) => {
 
 router.post("/jobpost", async(req,res) => {
     try{
-        console.log("Working")
         const {title, description, deadline, company} = req.body;
         //checkAuthentication
         const jobPost = await Job.create({
@@ -145,7 +133,6 @@ router.post("/jobpost", async(req,res) => {
         })
 
         await jobPost.save();
-        console.log("Saved!")
         res.status(201).json({message: "Success!"})
 
     }
@@ -180,11 +167,8 @@ router.delete("/jobpost", async(req,res) => {
 
 router.get("/getuser", async(req,res) => {
     try {
-        console.log("Hello!")
         const _id = req.cookies.id;
-        console.log(_id);
         const userId = new mongoose.Types.ObjectId(_id);
-        console.log(userId)
         const user = await User.findById(userId)
 
         res.status(201).json({message: "Success!", "user": user})

@@ -101,15 +101,10 @@ userSchema.methods.changePassword = async function(email, oldpassword, newpasswo
     if (!user) {
         throw Error('User not found');
     }
-
-
-
-
     const match = await bcrypt.compare(oldpassword, user.password)
     if (!match) {
         throw Error("Incorrect Password")
     }
-    console.log(newpassword)
     user.password = newpassword;
     await user.save();
     return `Password sucessfully updated`
