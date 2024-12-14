@@ -17,15 +17,6 @@ function Login() {
           const data = await response.json();
           
           if (response.ok) {
-            console.log('Login successful:', data);
-            console.log(data.cookie)
-            if (data.cookie) {
-              const [token, maxAge] = data.cookie;
-               const cookieName = 'jwt';  
-              //localStorage.setItem(cookieName, token)
-
-      console.log('Token cookie set:', token);
-            }
             window.location.assign('/'); 
           } else {
             console.error('Login failed:', data);
