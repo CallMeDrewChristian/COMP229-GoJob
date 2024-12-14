@@ -2,8 +2,8 @@ import logo from './assets/images/logo.jpg';
 import { Link } from 'react-router-dom';
 import { useState, useEffect } from 'react'
 import Cookies from 'js-cookie';
-const URL = "http://localhost:8000"
-
+const URL = "http://localhost:8000" //NEXT TIME PLEASE UTILIZE .ENV 
+ 
     
 
 function NavBar() {

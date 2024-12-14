@@ -8,7 +8,6 @@ const Job = require('../models/job');
 
 const mongoose = require('mongoose');
 
-//REMEMBER TO ADD FIRST NAME LAST NAME COMPANY NAME!!!
 router.get('/signup', (req,res)=>res.render('signup'))
 
 router.post('/signup', async (req, res) => {

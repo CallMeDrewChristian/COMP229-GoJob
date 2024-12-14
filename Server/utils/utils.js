@@ -4,8 +4,7 @@ const jwt = require('jsonwebtoken');
 
 
 
-   //creating tokens(cookies) and verifying it
-   //copied from lesson*
+ 
 
    const createToken = (id) => {
       return jwt.sign({id}, process.env.JWT_SECRET, {expiresIn: 3 * 24 * 60 * 60} );

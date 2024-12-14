@@ -122,10 +122,6 @@ userSchema.methods.deleteAccount = async function(email) {
         throw Error('User not found');
     }
 
-   /* const isAuth = await bcrypt.compare(password, user.password);
-    if (!isAuth) {
-        throw Error('Incorrect password');
-    }*/
 
     await User.findByIdAndDelete(user._id);
 
